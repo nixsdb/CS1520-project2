@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Staff dashboard</h2>
+<h3>Events you are working</h3>
+{% if working %}
+    <ul>
+        {% for event in working %}
+            <li>{{ event.date }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>You are not scheduled to work any events!</p>
+{% endif %}
+
+<h3>Events you can sign up for</h3>
+{% if available %}
+    <ul>
+        {% for event in available %}
+            <li>
+                {{ event.date }}
+                <form class="inline" method="post" action="{{ url_for('sign_up', event_id=event.id) }}">
+                    <button type="submit">Sign up</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No events are available for sign-up!</p>
+{% endif %}
+{% endblock %}

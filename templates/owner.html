@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Owner dashboard</h2>
+<p><a href="{{ url_for('create_staff') }}">Create a new staff account</a></p>
+<h3>Scheduled events</h3>
+{% if events %}
+    <ul>
+        {% for event in events %}
+            <li>
+                <strong>{{ event.date }}</strong> (requested by {{ event.customer.username }})
+                {% if event.signups %}
+                    <p>Staff working:</p>
+                    <ul>
+                        {% for signup in event.signups %}
+                            <li>{{ signup.staff.username }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No staff members have signed up for this event!</p>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No events are scheduled!</p>
+{% endif %}
+{% endblock %}
